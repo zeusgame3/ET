@@ -9,7 +9,7 @@ namespace ET
 
             // 加载配置
             Game.Scene.AddComponent<ResourcesComponent>();
-            await ResourcesComponent.Instance.LoadBundleAsync("config.unity3d");
+            ResourcesComponent.Instance.LoadBundle("config.unity3d");
             Game.Scene.AddComponent<ConfigComponent>();
             ConfigComponent.Instance.Load();
             ResourcesComponent.Instance.UnloadBundle("config.unity3d");
@@ -24,7 +24,7 @@ namespace ET
             Game.Scene.AddComponent<GlobalComponent>();
 
             Game.Scene.AddComponent<AIDispatcherComponent>();
-            await ResourcesComponent.Instance.LoadBundleAsync("unit.unity3d");
+            ResourcesComponent.Instance.LoadBundle("unit.unity3d");
             Scene zoneScene = await SceneFactory.CreateZoneScene(1, "Game", Game.Scene);
             await Game.EventSystem.Publish(new EventType.AppStartInitFinish() { ZoneScene = zoneScene });
         }

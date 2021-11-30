@@ -1,29 +1,11 @@
-using System;
-
 namespace ET
 {
-    [Timer(TimerType.SessionIdleChecker)]
-    public class SessionIdleChecker: ATimer<SessionIdleCheckerComponent>
-    {
-        public override void Run(SessionIdleCheckerComponent self)
-        {
-            try
-            {
-                self.Check();
-            }
-            catch (Exception e)
-            {
-                Log.Error($"move timer error: {self.Id}\n{e}");
-            }
-        }
-    }
-    
     [ObjectSystem]
     public class SessionIdleCheckerComponentAwakeSystem: AwakeSystem<SessionIdleCheckerComponent, int>
     {
         public override void Awake(SessionIdleCheckerComponent self, int checkInteral)
         {
-            self.RepeatedTimer = TimerComponent.Instance.NewRepeatedTimer(checkInteral, TimerType.SessionIdleChecker, self);
+            self.RepeatedTimer = TimerComponent.Instance.NewRepeatedTimer(checkInteral, () => { self.Check(); });
         }
     }
 
